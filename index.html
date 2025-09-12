@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Amorosa Waitlist Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-frame">
+      <section class="hero">
+        <img src="./assets/hero-banner-waitlist.jpg" alt="Hydrate Clear Restore - Amorosa" class="hero__image" />
+      </section>
+
+      <section class="content">
+        <div class="eyebrow">Join the waitlist</div>
+        <h1 class="headline">Product Re–Stock Inbound!</h1>
+
+        <div class="quote-input" aria-live="polite" aria-label="Customer question typing simulation">
+          <div class="quote-input__bubble">
+            <span class="quote-input__text" id="typingTarget"></span>
+            <span class="quote-input__caret" aria-hidden="true">|</span>
+          </div>
+        </div>
+
+        <p class="lead">
+          We hear you! <span class="muted">And we’re so excited to announce that the restock is almost here and we are giving our awesome Waitlist Members Exclusive Access before anyone else!</span>
+        </p>
+
+        <ul class="benefits">
+          <li class="li">✨ You’ll get to shop BEFORE the General Public so you don’t miss out!</li>
+          <li class="li">✨ You’ll have access to offers no one else will… We will be Sharing shortly 👀</li>
+          <li class="li">✨ You’ll have the best chance to secure your mask before it sells out again</li>
+        </ul>
+
+        <form class="signup" id="emailForm" novalidate>
+          <label class="sr-only" for="email">Email Address</label>
+          <input id="email" name="email" type="email" inputmode="email" placeholder="Email Address" required />
+          <button type="submit" class="cta">Join Now!</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+  </html>
+
+

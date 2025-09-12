@@ -1,0 +1,12 @@
+{
+  "name": "amorosa-waitlist-prototype",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static prototype for Amorosa waitlist page",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
+
+
