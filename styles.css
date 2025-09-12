@@ -92,7 +92,9 @@ body {
   gap: 2px;
   color: var(--brand-ink);
 }
-.quote-input__caret { display: inline-block; width: 8px; animation: blink 1s steps(1,end) infinite; }
+.quote-input__caret { display: none; }
+.quote-input__text { position: relative; }
+.quote-input__text::after { content: ""; display: inline-block; width: 2px; height: 1em; background: currentColor; margin-left: 2px; animation: blink 1s steps(1,end) infinite; vertical-align: -0.15em; }
 @keyframes blink { 0%, 50% { opacity: 1 } 50.01%, 100% { opacity: 0 } }
 
 .lead { margin: 8px 0 8px; font-weight: 700; }
