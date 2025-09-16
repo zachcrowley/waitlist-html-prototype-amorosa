@@ -26,6 +26,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;c
 .cd-label{ font:600 0.75rem/1 Inter, sans-serif; color:#4d6170; margin-top:0.3125rem; }
 
 .cd-cta{ display:flex; align-items:center; gap:0.75rem; justify-content:flex-end; margin-top:1.125rem; }
+.cta-error{ color:#d97706; font:700 0.8125rem/1.2 Inter, sans-serif; margin-left:0.5rem; }
 .cd-cta .btn{ background:var(--navy); color:#fff; border:0; border-radius:9999px; padding:0.75rem 1rem; font:700 0.875rem/1 Inter, sans-serif; cursor:pointer; box-shadow:0 0.125rem 0.5rem rgba(17,58,92,0.15); text-decoration:none; transition: transform .15s ease, filter .15s ease, width .28s ease, flex-basis .28s ease; display:inline-block; text-align:center; box-sizing:border-box; will-change: width; }
 .cd-cta .btn:hover{ filter:brightness(1.05); transform:scale(1.03) }
 .cd-cta{ position:relative; }
@@ -53,6 +54,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;c
   .cta-input{ width:100%; }
   .cd-cta .btn{ width:100%; text-align:center; margin-top:6px; }
   .cd-label{ margin-top:5px; }
+  .cta-error{ margin-left:0; }
   .cd-tab{ width:75%; left:50%; }
 }
 @media (max-width: 420px){ .cd-card{ min-width:64px; padding:8px 10px } .cd-num{ font-size:24px } .cd-copy .title{ font-size:18px } }

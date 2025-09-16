@@ -41,7 +41,7 @@ export default function init() {
   const subDesktop = createEl('div','sub sub--desktop');
   subDesktop.innerHTML = '<b>Join the waitlist today!</b><br>For early access before the <b>General Public</b> and <b>Special Goodies</b> to be shared soon!';
   const subMobile = createEl('div','sub sub--mobile');
-  subMobile.innerHTML = 'Join the waitlist today!<br>For early access before the <b>General Public</b>...<br>and <b>Special Goodies</b> to be shared soon!';
+  subMobile.innerHTML = '<b>Join the waitlist today!</b><br>For early access before the <b>General Public</b>...<br>and <b>Special Goodies</b> to be shared soon!';
   copy.append(subDesktop, subMobile);
 
   // Timer
@@ -71,6 +71,9 @@ export default function init() {
   const btn = createEl('a','btn') as HTMLAnchorElement;
   btn.href = ctaHref; btn.setAttribute('aria-label','Join the waitlist');
   ctaWrap.append(btn);
+  const err = createEl('div','cta-error');
+  err.style.display = 'none';
+  ctaWrap.appendChild(err);
   // No close control in prototype per requirement
 
   // Row for description and timer side by side
@@ -175,6 +178,20 @@ export default function init() {
     }
     btn.textContent = 'Join Now';
     btn.setAttribute('aria-label','Join now');
+  });
+
+  // Validate on Join Now clicks
+  btn.addEventListener('click', (e) => {
+    if (btn.textContent !== 'Join Now') return; // only validate after expanded
+    const value = input.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    if (!valid) {
+      err.textContent = 'Please input an Email Address';
+      err.style.display = 'block';
+    } else {
+      err.style.display = 'none';
+      // Prototype: no submit; in production, fire request here
+    }
   });
 
   const close = createEl('button','cd-close cd-close-abs','×');
