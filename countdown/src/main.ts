@@ -128,6 +128,8 @@ export default function init() {
       }
       btn.style.width = `${target}px`;
       input.style.width = `${target}px`;
+      // Keep reserved space for the sliding form
+      formWrap.style.maxWidth = `${target}px`;
     }
   }
   updateCtaText();
@@ -137,7 +139,19 @@ export default function init() {
   // Interactions
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    ctaWrap.classList.add('open');
+    // Desktop: reserve space by shrinking the button first, then open form on next frame
+    if (!isMobile()) {
+      const timerWidth = timer.getBoundingClientRect().width;
+      if (timerWidth > 0) {
+        const target = Math.max(220, Math.round(timerWidth * 0.9));
+        btn.style.width = `${target}px`;
+        formWrap.style.maxWidth = `${target}px`;
+        input.style.width = `${target}px`;
+      }
+      requestAnimationFrame(() => ctaWrap.classList.add('open'));
+    } else {
+      ctaWrap.classList.add('open');
+    }
     btn.textContent = 'Join Now';
     btn.setAttribute('aria-label','Join now');
     setTimeout(() => input.focus(), 200);
