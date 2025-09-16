@@ -80,6 +80,14 @@ export default function init() {
   inner.append(header, row, ctaWrap);
   mount.appendChild(bar);
 
+  // Intro animation on first paint when not collapsed
+  if (!mount.classList.contains('collapsed')) {
+    mount.classList.add('preopen');
+    setTimeout(() => {
+      mount.classList.remove('preopen');
+    }, 250); // short slide-up delay
+  }
+
   // Live region (polite)
   const live = createEl('div');
   live.setAttribute('aria-live','polite');

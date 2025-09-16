@@ -4,6 +4,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;c
 
 #amorosa-countdown{ position:fixed; inset:auto 0 0; z-index:1000; }
 .cd-bar{ background:var(--bg); box-shadow:var(--shadow); border-top-left-radius:1.125rem; border-top-right-radius:1.125rem; position:relative; transition: transform .3s ease; }
+.preopen .cd-bar{ transform: translateY(120%); }
 .collapsed .cd-bar{ transform: translateY(120%); }
 .cd-tab{ position:fixed; left:10%; bottom:0; transform:translate(-50%, 0.5rem); background:var(--navy); color:#fff; border:0; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem; padding:0.625rem 1rem; font:600 0.8125rem/1.4 Inter, sans-serif; box-shadow:0 -0.125rem 0.75rem rgba(17,58,92,.2); cursor:pointer; z-index:1001; opacity:0; pointer-events:none; transition: opacity .25s ease, transform .25s ease; display:block; }
 .collapsed .cd-tab{ opacity:1; pointer-events:auto; transform:translate(-50%, 0); }
