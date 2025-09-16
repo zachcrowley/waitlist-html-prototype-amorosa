@@ -127,6 +127,7 @@ export default function init() {
         target = Math.max(220, Math.round(timerWidth * 0.9));
       }
       btn.style.width = `${target}px`;
+      (btn as HTMLElement).style.flexBasis = `${target}px`;
       input.style.width = `${target}px`;
       // Keep reserved space for the sliding form
       formWrap.style.maxWidth = `${target}px`;
@@ -145,6 +146,7 @@ export default function init() {
       if (timerWidth > 0) {
         const target = Math.max(220, Math.round(timerWidth * 0.9));
         btn.style.width = `${target}px`;
+        (btn as HTMLElement).style.flexBasis = `${target}px`;
         formWrap.style.maxWidth = `${target}px`;
         input.style.width = `${target}px`;
       }
