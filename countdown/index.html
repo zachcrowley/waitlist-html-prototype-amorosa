@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Amorosa Countdown Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lato:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles.css">
+  </head>
+  <body>
+    <main style="padding:24px 24px 160px; max-width:960px; margin:0 auto;">
+      <h1>Demo Page</h1>
+      <div style="height:1200px"></div>
+    </main>
+
+    <div id="amorosa-countdown"
+      data-target-utc="2025-10-01T10:00:00Z"
+      data-cta-href="#waitlist"
+      role="region" aria-label="Restock countdown">
+      <!-- Rendered by main.ts -->
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+
+    <!-- Snippet-only variant for CMS (copy below into your page):
+<div id="amorosa-countdown" data-target-utc="2025-10-01T10:00:00Z" data-cta-href="#waitlist" role="region" aria-label="Restock countdown"></div>
+<script type="module">
+import '/src/styles.css';
+import init from '/src/main.ts';
+init();
+</script>
+    -->
+  </body>
+  </html>
+
+

@@ -1,0 +1,151 @@
+{% comment %}
+  Amorosa Waitlist Landing - Shopify Section
+  Drop this file into sections/ and create a page that uses a template rendering this section.
+{% endcomment %}
+
+<section id="waitlist-landing-{{ section.id }}" class="waitlist-landing">
+  <div class="page-frame">
+    <div class="hero">
+      <picture>
+        <source srcset="{{ 'hero-banner-waitlist.webp' | asset_url }}" type="image/webp">
+        <img class="hero__image" src="{{ 'hero-banner-waitlist.jpg' | asset_url }}" alt="Hydrate Clear Restore - Amorosa">
+      </picture>
+    </div>
+
+    <div class="content">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="headline">{{ section.settings.headline }}</h1>
+
+      <div class="quote-input" aria-live="polite" aria-label="Customer question typing simulation">
+        <div class="quote-input__bubble">
+          <span class="quote-input__text" id="typingTarget-{{ section.id }}"></span>
+        </div>
+      </div>
+
+      <p class="lead">
+        {{ section.settings.lead_prefix }} <span class="muted">{{ section.settings.lead_support }}</span>
+      </p>
+
+      <ul class="benefits">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+          <li class="li">{{ block.settings.text }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      <form class="signup" onsubmit="event.preventDefault()">
+        <label class="sr-only" for="email-{{ section.id }}">Email Address</label>
+        <input id="email-{{ section.id }}" name="email" type="email" inputmode="email" placeholder="{{ section.settings.email_placeholder }}" required>
+        <button type="submit" class="cta">{{ section.settings.cta_label }}</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Scoped styles to this section */
+  #waitlist-landing-{{ section.id }} { --brand-ink: #1b3a4b; --brand-ink-2: #3a6a85; --ink: #16303c; --muted: #556b76; --card: #ffffff; --ring: #bcd8ea; --benefit-card: #eaf4fb; --benefit-border: #d4e7f5; }
+  #waitlist-landing-{{ section.id }} .page-frame { max-width: 980px; margin: 28px auto; background: var(--card); border-radius: 28px; box-shadow: 0 10px 25px rgba(25,52,65,.12), 0 2px 8px rgba(25,52,65,.08); overflow: hidden; border: 1px solid #e3eef6; }
+  #waitlist-landing-{{ section.id }} .hero__image { display:block; width:100%; height:auto; border-top-left-radius:28px; border-top-right-radius:28px; }
+  #waitlist-landing-{{ section.id }} .cta { background: linear-gradient(180deg,#e6f2fb,#cfe7f6); color:#173a4b; border:1px solid var(--ring); border-radius:999px; padding:14px 22px; font-weight:700; box-shadow:0 6px 14px rgba(99,151,181,.25), inset 0 1px 0 rgba(255,255,255,.4); cursor:pointer; }
+  #waitlist-landing-{{ section.id }} .content { padding:32px 36px 40px; }
+  #waitlist-landing-{{ section.id }} .eyebrow { text-transform:uppercase; letter-spacing:.22em; color:var(--brand-ink-2); font-weight:700; font-size:12px; }
+  #waitlist-landing-{{ section.id }} .headline { margin:10px 0 16px; color:var(--brand-ink); font-size:40px; line-height:1.15; font-weight:800; }
+  #waitlist-landing-{{ section.id }} .quote-input { margin:16px 0 22px; }
+  #waitlist-landing-{{ section.id }} .quote-input__bubble { border:2px solid #8ab2cd; padding:16px 18px; border-radius:16px; font-weight:600; display:inline-flex; align-items:center; gap:2px; color:var(--brand-ink); }
+  #waitlist-landing-{{ section.id }} .quote-input__text { position:relative; }
+  #waitlist-landing-{{ section.id }} .quote-input__text::after { content:""; display:inline-block; width:2px; height:1em; background:currentColor; margin-left:2px; animation: blink 1s steps(1,end) infinite; vertical-align:-0.15em; }
+  @keyframes blink { 0%,50%{opacity:1} 50.01%,100%{opacity:0} }
+  #waitlist-landing-{{ section.id }} .lead { margin:8px 0 8px; font-weight:700; }
+  #waitlist-landing-{{ section.id }} .muted { color:var(--muted); font-weight:400; line-height:2rem; }
+  #waitlist-landing-{{ section.id }} .benefits { list-style:none; padding:0 22px; margin:28px 0 28px; background:var(--benefit-card); border-radius:16px; border:1px solid var(--benefit-border); box-shadow:0 4px 12px rgba(27,58,75,.06); }
+  #waitlist-landing-{{ section.id }} .benefits li { margin:30px 0; font-weight:600; margin-left:1.5rem; font-size:18px; }
+  #waitlist-landing-{{ section.id }} .li { margin-top:20px; }
+  #waitlist-landing-{{ section.id }} .signup { display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border:2px solid #a6c7dc; border-radius:999px; padding:10px 10px 10px 18px; margin-top:45px; }
+  #waitlist-landing-{{ section.id }} .signup input { border:0; outline:none; font-size:20px; min-width:0; margin-left:10px; }
+  #waitlist-landing-{{ section.id }} .signup .cta { padding:12px 26px; font-size:18px; }
+  #waitlist-landing-{{ section.id }} .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  @media (max-width: 768px){
+    #waitlist-landing-{{ section.id }} .page-frame { margin:12px; border-radius:22px; }
+    #waitlist-landing-{{ section.id }} .hero__image { border-top-left-radius:22px; border-top-right-radius:22px; }
+    #waitlist-landing-{{ section.id }} .content { padding:22px; }
+    #waitlist-landing-{{ section.id }} .headline { font-size:30px; }
+    #waitlist-landing-{{ section.id }} .quote-input__bubble { font-size:14px; }
+    #waitlist-landing-{{ section.id }} .signup { display:block; border:0; padding:0; }
+    #waitlist-landing-{{ section.id }} .signup input { width:100%; border:2px solid #a6c7dc; border-radius:999px; padding:14px 16px; margin-left:0; font-size:18px; }
+    #waitlist-landing-{{ section.id }} .signup .cta { width:100%; margin-top:12px; }
+    #waitlist-landing-{{ section.id }} .benefits { padding:16px; padding-top:0; padding-bottom:0; }
+    #waitlist-landing-{{ section.id }} .benefits li { margin-left:0; font-size:15px; }
+  }
+</style>
+
+<script>
+  (function(){
+    var scenarios = [
+      "“When is the Abundance Face and Body Mask Coming Back in Stock!!! I've Run out!”",
+      "“Is the Abundance Mask restocking soon? My skin misses it 😭”",
+      "“When can I buy the Abundance Mask again?”"
+    ];
+    var target = document.getElementById('typingTarget-{{ section.id }}');
+    function delay(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    function typeText(text, i){
+      if (!target) return Promise.resolve();
+      return new Promise(function(resolve){
+        var idx = 0;
+        function step(){
+          if (idx < text.length){
+            target.textContent += text.charAt(idx++);
+            setTimeout(step, delay(20,85));
+          } else { resolve(); }
+        }
+        target.textContent = '';
+        step();
+      });
+    }
+    function backspace(){
+      if (!target) return Promise.resolve();
+      return new Promise(function(resolve){
+        var txt = target.textContent;
+        var i = txt.length;
+        function step(){
+          if (i >= 0){ target.textContent = txt.slice(0, i--); setTimeout(step, delay(10,35)); }
+          else { resolve(); }
+        }
+        step();
+      });
+    }
+    function loop(){
+      var i = 0;
+      (function run(){
+        var text = scenarios[i % scenarios.length];
+        typeText(text).then(function(){ return new Promise(function(r){ setTimeout(r, 1350); }); })
+          .then(backspace)
+          .then(function(){ return new Promise(function(r){ setTimeout(r, 450); }); })
+          .then(function(){ i++; run(); });
+      })();
+    }
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(loop, 300); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Waitlist Landing",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the waitlist" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Product Re–Stock Inbound!" },
+    { "type": "text", "id": "lead_prefix", "label": "Lead prefix", "default": "We hear you!" },
+    { "type": "textarea", "id": "lead_support", "label": "Lead support", "default": "And we’re so excited to announce that the restock is almost here and we are giving our awesome Waitlist Members Exclusive Access before anyone else!" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "Email Address" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Join Now!" }
+  ],
+  "blocks": [
+    { "type": "benefit", "name": "Benefit", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "✨ You’ll get to shop BEFORE the General Public so you don’t miss out!" } ] }
+  ],
+  "max_blocks": 5,
+  "presets": [ { "name": "Waitlist Landing" } ]
+}
+{% endschema %}
+
+

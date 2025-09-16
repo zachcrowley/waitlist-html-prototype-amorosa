@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "waitlist-landing",
+      "settings": {
+        "eyebrow": "Join the waitlist",
+        "headline": "Product Re–Stock Inbound!",
+        "lead_prefix": "We hear you!",
+        "lead_support": "And we’re so excited to announce that the restock is almost here and we are giving our awesome Waitlist Members Exclusive Access before anyone else!",
+        "email_placeholder": "Email Address",
+        "cta_label": "Join Now!"
+      },
+      "blocks": {
+        "benefit-1": { "type": "benefit", "settings": { "text": "✨ You’ll get to shop BEFORE the General Public so you don’t miss out!" } },
+        "benefit-2": { "type": "benefit", "settings": { "text": "✨ You’ll have access to offers no one else will… We will be sharing shortly 👀" } },
+        "benefit-3": { "type": "benefit", "settings": { "text": "✨ You’ll have the best chance to secure your mask before it sells out again" } }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"]
+    }
+  },
+  "order": ["main"]
+}
+
+

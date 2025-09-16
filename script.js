@@ -1,6 +1,6 @@
 (function () {
   const scenarios = [
-    '“When is the Abundance Face and Body Mask Coming Back in Stock!!! I\'ve Run out!”',
+    '“When is the Abundance Face and Body Mask Coming Back in Stock!!! I\'ve Run Out!”',
     '“Is the Abundance Mask restocking soon? My skin misses it 😭”',
     '“When can I buy the Abundance Mask again?”'
   ];
