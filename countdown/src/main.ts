@@ -109,6 +109,30 @@ export default function init() {
 
   // Set initial CTA text based on viewport and sync width to timer on desktop
   function isMobile(){ return window.matchMedia('(max-width: 900px)').matches; }
+  function getGapPx(): number {
+    const gap = getComputedStyle(ctaWrap).gap || '12px';
+    const n = parseFloat(gap);
+    return Number.isFinite(n) ? n : 12;
+  }
+  function applySizes(timerWidth:number, opened:boolean){
+    if (opened) {
+      const gap = getGapPx();
+      const inputTarget = Math.max(220, Math.round(timerWidth * 0.58));
+      let btnTarget = Math.max(160, Math.round(timerWidth - gap - inputTarget));
+      // clamp to avoid negative/overflow
+      if (btnTarget + gap + inputTarget > timerWidth) {
+        btnTarget = Math.max(140, timerWidth - gap - inputTarget);
+      }
+      (btn as HTMLElement).style.width = `${btnTarget}px`;
+      (btn as HTMLElement).style.flexBasis = `${btnTarget}px`;
+      input.style.width = `${inputTarget}px`;
+      formWrap.style.maxWidth = `${inputTarget}px`;
+    } else {
+      (btn as HTMLElement).style.width = `${Math.round(timerWidth)}px`;
+      (btn as HTMLElement).style.flexBasis = `${Math.round(timerWidth)}px`;
+      formWrap.style.maxWidth = '0px';
+    }
+  }
   function updateCtaText(){
     if (isMobile()) {
       btn.textContent = 'Join the Waitlist';
@@ -120,17 +144,7 @@ export default function init() {
     if (isMobile()) { btn.style.width = '100%'; return; }
     const timerWidth = timer.getBoundingClientRect().width;
     if (timerWidth > 0) {
-      // Default: match timer width
-      let target = Math.round(timerWidth);
-      // When input is visible, make button slightly smaller so input and button appear balanced
-      if (ctaWrap.classList.contains('open')) {
-        target = Math.max(220, Math.round(timerWidth * 0.9));
-      }
-      btn.style.width = `${target}px`;
-      (btn as HTMLElement).style.flexBasis = `${target}px`;
-      input.style.width = `${target}px`;
-      // Keep reserved space for the sliding form
-      formWrap.style.maxWidth = `${target}px`;
+      applySizes(timerWidth, ctaWrap.classList.contains('open'));
     }
   }
   updateCtaText();
@@ -140,15 +154,11 @@ export default function init() {
   // Interactions
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    // Desktop: reserve space by shrinking the button first, then open form on next frame
+    // Desktop: shrink CTA so CTA + input + gap == timer width, then reveal form next frame
     if (!isMobile()) {
       const timerWidth = timer.getBoundingClientRect().width;
       if (timerWidth > 0) {
-        const target = Math.max(220, Math.round(timerWidth * 0.9));
-        btn.style.width = `${target}px`;
-        (btn as HTMLElement).style.flexBasis = `${target}px`;
-        formWrap.style.maxWidth = `${target}px`;
-        input.style.width = `${target}px`;
+        applySizes(timerWidth, true);
       }
       requestAnimationFrame(() => ctaWrap.classList.add('open'));
     } else {
