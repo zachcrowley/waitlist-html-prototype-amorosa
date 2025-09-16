@@ -175,7 +175,6 @@ export default function init() {
     }
     btn.textContent = 'Join Now';
     btn.setAttribute('aria-label','Join now');
-    setTimeout(() => input.focus(), 200);
   });
 
   const close = createEl('button','cd-close cd-close-abs','×');
