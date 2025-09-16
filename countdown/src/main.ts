@@ -27,7 +27,7 @@ export default function init() {
   const inner = createEl('div', 'cd-inner');
   bar.appendChild(inner);
   const reopenTab = createEl('button','cd-tab');
-  reopenTab.innerHTML = 'Product Restock Launch<br>Exclusive Waitlist';
+  reopenTab.textContent = 'Join The Exclusive Waitlist';
   // Place tab outside the transformed bar so it remains visible when collapsed
   mount.appendChild(reopenTab);
 
@@ -61,7 +61,6 @@ export default function init() {
 
   // CTA
   const ctaWrap = createEl('div','cd-cta');
-  ctaWrap.appendChild(createEl('div','helper','Join the waitlist today for early access'));
   // Sliding form container (desktop: slides from right to left; mobile: slides up)
   const formWrap = createEl('div','cta-form');
   const input = createEl('input','cta-input') as HTMLInputElement;
@@ -69,7 +68,7 @@ export default function init() {
   formWrap.appendChild(input);
   ctaWrap.appendChild(formWrap);
 
-  const btn = createEl('a','btn','Join the Waitlist') as HTMLAnchorElement;
+  const btn = createEl('a','btn') as HTMLAnchorElement;
   btn.href = ctaHref; btn.setAttribute('aria-label','Join the waitlist');
   ctaWrap.append(btn);
   // No close control in prototype per requirement
@@ -107,6 +106,24 @@ export default function init() {
     setTimeout(render, 1000);
   }
   render();
+
+  // Set initial CTA text based on viewport and sync width to timer on desktop
+  function isMobile(){ return window.matchMedia('(max-width: 900px)').matches; }
+  function updateCtaText(){
+    if (isMobile()) {
+      btn.textContent = 'Join the Waitlist';
+    } else {
+      btn.textContent = 'Join the Waitlist today for Early Access';
+    }
+  }
+  function syncBtnWidth(){
+    if (isMobile()) { btn.style.width = '100%'; return; }
+    const w = timer.getBoundingClientRect().width;
+    if (w > 0) btn.style.width = `${Math.round(w)}px`;
+  }
+  updateCtaText();
+  syncBtnWidth();
+  window.addEventListener('resize', () => { updateCtaText(); syncBtnWidth(); });
 
   // Interactions
   btn.addEventListener('click', (e) => {
