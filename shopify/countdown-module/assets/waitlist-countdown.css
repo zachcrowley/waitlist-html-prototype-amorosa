@@ -1,0 +1,52 @@
+/* Scoped Countdown Bar Styles (global include) */
+#waitlist-countdown-root { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; }
+#waitlist-countdown-root .cd-bar { background: var(--wl-bg, #F3FAFF); box-shadow: 0 -2px 18px rgba(17,58,92,.08); border-top-left-radius: 18px; border-top-right-radius: 18px; position: relative; transform: translateY(0); transition: transform .3s ease; }
+#waitlist-countdown-root.preopen .cd-bar { transform: translateY(120%); }
+#waitlist-countdown-root.collapsed .cd-bar { transform: translateY(120%); }
+
+#waitlist-countdown-root .cd-tab { position: fixed; left: 50%; bottom: 0; transform: translate(-50%, .5rem); background: var(--wl-navy, #113A5C); color: #fff; border: 0; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 10px 16px; font: 600 13px/1.4 Inter, system-ui, sans-serif; box-shadow: 0 -2px 12px rgba(17,58,92,.2); cursor: pointer; z-index: 1001; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; display: block; }
+#waitlist-countdown-root.collapsed .cd-tab { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+
+#waitlist-countdown-root .cd-inner { width: 700px; max-width: calc(100% - 2rem); margin: 0 auto; padding: 22px 0; }
+#waitlist-countdown-root .cd-header { text-align: left; }
+#waitlist-countdown-root .cd-header .title { font: 600 22px/1.25 Poppins, system-ui, sans-serif; color: var(--wl-navy, #113A5C); margin: 4px 0 0; }
+#waitlist-countdown-root .cd-header .eyebrow { font: 600 11px/1 Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .22em; color: #2a5674; margin-bottom: 6px; }
+
+#waitlist-countdown-root .cd-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 19px; }
+#waitlist-countdown-root .cd-copy { flex: 1 1 auto; margin-top: 10px; padding-right: 105px; }
+#waitlist-countdown-root .cd-copy .sub { font: 400 14px/1.6 Lato, system-ui, sans-serif; color: #5C6C7A; }
+#waitlist-countdown-root .sub--mobile { display: none; }
+
+#waitlist-countdown-root .cd-timer { display: grid; grid-auto-flow: column; gap: 12px; justify-content: end; }
+#waitlist-countdown-root .cd-card { background: #fff; border-radius: 16px; padding: 12px 14px; box-shadow: 0 2px 8px rgba(17,58,92,.08); text-align: center; min-width: 76px; }
+#waitlist-countdown-root .cd-num { font: 700 30px/1 Inter, system-ui, sans-serif; color: #183c56; }
+#waitlist-countdown-root .cd-label { font: 600 12px/1 Inter, system-ui, sans-serif; color: #4d6170; margin-top: 4px; }
+
+#waitlist-countdown-root .cd-cta { display: flex; align-items: center; gap: 12px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; position: relative; }
+#waitlist-countdown-root .cta-form { overflow: hidden; max-width: 0; opacity: 0; transform: translateX(12px); transition: max-width .25s ease, opacity .25s ease, transform .25s ease; }
+#waitlist-countdown-root .cd-cta.open .cta-form { max-width: 260px; opacity: 1; transform: translateX(0); }
+#waitlist-countdown-root .cta-input { width: 240px; border: 2px solid #a6c7dc; border-radius: 9999px; padding: 10px 14px; font: 600 14px/1 Inter, system-ui, sans-serif; color: #173a4b; transition: width .28s ease; }
+#waitlist-countdown-root .cd-cta .btn { background: var(--wl-navy, #113A5C); color: #fff; border: 0; border-radius: 9999px; padding: 12px 18px; font: 700 14px/1 Inter, system-ui, sans-serif; cursor: pointer; box-shadow: 0 2px 8px rgba(17,58,92,.15); text-decoration: none; transition: transform .15s ease, filter .15s ease, width .28s ease, flex-basis .28s ease; display: inline-block; text-align: center; box-sizing: border-box; }
+#waitlist-countdown-root .cd-cta .btn:hover { filter: brightness(1.05); transform: scale(1.03); }
+#waitlist-countdown-root .cta-error { color: #d97706; font: 700 13px/1.2 Inter, system-ui, sans-serif; flex-basis: 100%; text-align: right; margin: 4px 0 0; }
+#waitlist-countdown-root .cd-close { background: transparent; border: 0; font: 700 18px/1 Inter; color: #27455a; position: absolute; top: 6px; right: 10px; cursor: pointer; }
+
+@media (max-width: 900px) {
+  #waitlist-countdown-root .cd-inner { width: 100%; max-width: 85%; padding: 25px 0; margin: 0 auto; }
+  #waitlist-countdown-root .cd-row { flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 3px; }
+  #waitlist-countdown-root .cd-copy { width: 100%; padding-right: 0; margin-bottom: 8px; }
+  #waitlist-countdown-root .sub--desktop { display: none; }
+  #waitlist-countdown-root .sub--mobile { display: block; }
+  #waitlist-countdown-root .cd-timer { width: 100%; justify-content: center; grid-template-columns: repeat(4, 1fr); grid-auto-flow: row; gap: 10px; }
+  #waitlist-countdown-root .cd-card { min-width: auto; }
+  #waitlist-countdown-root .cd-cta { justify-content: flex-start; flex-direction: column; align-items: stretch; gap: 8px; }
+  #waitlist-countdown-root .cta-form { width: 100%; max-width: none; max-height: 0; transform: translateY(8px); transition: max-height .25s ease, opacity .25s ease, transform .25s ease; order: 0; }
+  #waitlist-countdown-root .cd-cta.open .cta-form { max-height: 48px; opacity: 1; transform: translateY(0); }
+  #waitlist-countdown-root .cta-input { width: 100%; }
+  #waitlist-countdown-root .cta-error { order: 1; text-align: left; }
+  #waitlist-countdown-root .cd-cta .btn { order: 2; width: 100%; text-align: center; margin-top: 6px; }
+  #waitlist-countdown-root .cd-label { margin-top: 5px; }
+  #waitlist-countdown-root .cd-tab { width: 75%; }
+}
+
+

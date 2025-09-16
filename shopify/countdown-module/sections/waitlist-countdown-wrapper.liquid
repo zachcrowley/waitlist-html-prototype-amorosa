@@ -1,0 +1,35 @@
+{% comment %}
+  Wrapper section to provide per-page overrides for the global countdown module.
+  It only emits a small script with overrides; the actual bar is injected globally.
+{% endcomment %}
+
+<div class="waitlist-countdown-overrides" id="waitlist-countdown-overrides-{{ section.id }}"></div>
+<script>
+window.__COUNTDOWN__PAGE_OVERRIDES = Object.assign({}, window.__COUNTDOWN__PAGE_OVERRIDES || {}, {
+  targetUtc: {{ section.settings.target_utc | json }},
+  ctaHref: {{ section.settings.cta_href | json }},
+  eyebrow: {{ section.settings.eyebrow | json }},
+  title: {{ section.settings.title | json }},
+  copyDesktop: {{ section.settings.copy_desktop | json }},
+  copyMobile: {{ section.settings.copy_mobile | json }},
+  enableClose: {{ section.settings.enable_close | json }}
+});
+</script>
+
+{% schema %}
+{
+  "name": "Countdown Overrides",
+  "settings": [
+    { "type": "text", "id": "target_utc", "label": "Target UTC", "default": "2025-10-01T10:00:00Z" },
+    { "type": "url",  "id": "cta_href",   "label": "CTA URL", "default": "#waitlist" },
+    { "type": "text", "id": "eyebrow",    "label": "Eyebrow", "default": "OCTOBER 1ST • 8:00PM (AEST)" },
+    { "type": "text", "id": "title",      "label": "Title", "default": "Abundance Face & Body Mask Restock Launch" },
+    { "type": "textarea", "id": "copy_desktop", "label": "Desktop Copy (HTML)", "default": "Join the waitlist today<br>For early access before the General Public" },
+    { "type": "textarea", "id": "copy_mobile",  "label": "Mobile Copy (HTML)",  "default": "Join the waitlist today for early access<br>before the General Public" },
+    { "type": "checkbox", "id": "enable_close", "label": "Enable Close/Tab", "default": true }
+  ],
+  "presets": [ { "name": "Countdown Overrides" } ]
+}
+{% endschema %}
+
+
