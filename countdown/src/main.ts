@@ -160,14 +160,14 @@ export default function init() {
       if (timerWidth > 0) {
         applySizes(timerWidth, true);
       }
-      requestAnimationFrame(() => ctaWrap.classList.add('open'));
+      requestAnimationFrame(() => { ctaWrap.classList.add('open'); syncBtnWidth(); });
     } else {
       ctaWrap.classList.add('open');
+      syncBtnWidth();
     }
     btn.textContent = 'Join Now';
     btn.setAttribute('aria-label','Join now');
     setTimeout(() => input.focus(), 200);
-    syncBtnWidth();
   });
 
   const close = createEl('button','cd-close cd-close-abs','×');
