@@ -118,8 +118,17 @@ export default function init() {
   }
   function syncBtnWidth(){
     if (isMobile()) { btn.style.width = '100%'; return; }
-    const w = timer.getBoundingClientRect().width;
-    if (w > 0) btn.style.width = `${Math.round(w)}px`;
+    const timerWidth = timer.getBoundingClientRect().width;
+    if (timerWidth > 0) {
+      // Default: match timer width
+      let target = Math.round(timerWidth);
+      // When input is visible, make button slightly smaller so input and button appear balanced
+      if (ctaWrap.classList.contains('open')) {
+        target = Math.max(220, Math.round(timerWidth * 0.9));
+      }
+      btn.style.width = `${target}px`;
+      input.style.width = `${target}px`;
+    }
   }
   updateCtaText();
   syncBtnWidth();
@@ -132,6 +141,7 @@ export default function init() {
     btn.textContent = 'Join Now';
     btn.setAttribute('aria-label','Join now');
     setTimeout(() => input.focus(), 200);
+    syncBtnWidth();
   });
 
   const close = createEl('button','cd-close cd-close-abs','×');
