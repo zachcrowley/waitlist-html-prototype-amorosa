@@ -25,13 +25,13 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;c
 .cd-label{ font:600 0.75rem/1 Inter, sans-serif; color:#4d6170; margin-top:0.3125rem; }
 
 .cd-cta{ display:flex; align-items:center; gap:0.75rem; justify-content:flex-end; margin-top:1.125rem; }
-.cd-cta .btn{ background:var(--navy); color:#fff; border:0; border-radius:9999px; padding:0.75rem 1rem; font:700 0.875rem/1 Inter, sans-serif; cursor:pointer; box-shadow:0 0.125rem 0.5rem rgba(17,58,92,0.15); text-decoration:none; transition: transform .15s ease, filter .15s ease, width .25s ease; display:inline-block; text-align:center; box-sizing:border-box; }
+.cd-cta .btn{ background:var(--navy); color:#fff; border:0; border-radius:9999px; padding:0.75rem 1rem; font:700 0.875rem/1 Inter, sans-serif; cursor:pointer; box-shadow:0 0.125rem 0.5rem rgba(17,58,92,0.15); text-decoration:none; transition: transform .15s ease, filter .15s ease, width .28s ease, flex-basis .28s ease; display:inline-block; text-align:center; box-sizing:border-box; will-change: width; }
 .cd-cta .btn:hover{ filter:brightness(1.05); transform:scale(1.03) }
 .cd-cta{ position:relative; }
 .cta-form{ overflow:hidden; max-width:0; opacity:0; transform:translateX(12px); transition:max-width .25s ease, opacity .25s ease, transform .25s ease; }
 .cd-cta.open .cta-form{ max-width:260px; opacity:1; transform:translateX(0); }
 .cd-cta.open .helper{ visibility:hidden; }
-.cta-input{ width:15rem; border:0.125rem solid #a6c7dc; border-radius:9999px; padding:0.625rem 0.875rem; font:600 0.875rem/1 Inter, sans-serif; color:#173a4b; }
+.cta-input{ width:15rem; border:0.125rem solid #a6c7dc; border-radius:9999px; padding:0.625rem 0.875rem; font:600 0.875rem/1 Inter, sans-serif; color:#173a4b; transition: width .28s ease; will-change: width; }
 .cd-close{ background:transparent; border:0; font:700 18px/1 Inter; color:#27455a; margin-left:8px; cursor:pointer; }
 .cd-close.cd-close-abs{ position:absolute; top:6px; right:10px; color:#27455a; }
 .cd-close:focus-visible,.cd-cta .btn:focus-visible { outline:3px solid #84b8e0; outline-offset:2px }
