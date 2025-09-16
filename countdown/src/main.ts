@@ -144,11 +144,19 @@ export default function init() {
       formWrap.style.maxWidth = '0px';
     }
   }
+  let expanded = false;
   function updateCtaText(){
+    if (expanded) {
+      btn.textContent = 'Join Now';
+      btn.setAttribute('aria-label','Join now');
+      return;
+    }
     if (isMobile()) {
       btn.textContent = 'Join the Waitlist';
+      btn.setAttribute('aria-label','Join the waitlist');
     } else {
       btn.textContent = 'Join the Waitlist today for Early Access';
+      btn.setAttribute('aria-label','Join the waitlist');
     }
   }
   function syncBtnWidth(){
@@ -165,24 +173,22 @@ export default function init() {
   // Interactions
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    // Desktop: shrink CTA so CTA + input + gap == timer width, then reveal form next frame
-    if (!isMobile()) {
-      const timerWidth = timer.getBoundingClientRect().width;
-      if (timerWidth > 0) {
-        applySizes(timerWidth, true);
+    if (!expanded) {
+      // First state: expand
+      expanded = true;
+      if (!isMobile()) {
+        const timerWidth = timer.getBoundingClientRect().width;
+        if (timerWidth > 0) applySizes(timerWidth, true);
+        requestAnimationFrame(() => { ctaWrap.classList.add('open'); syncBtnWidth(); });
+      } else {
+        ctaWrap.classList.add('open');
+        syncBtnWidth();
       }
-      requestAnimationFrame(() => { ctaWrap.classList.add('open'); syncBtnWidth(); });
-    } else {
-      ctaWrap.classList.add('open');
-      syncBtnWidth();
+      updateCtaText();
+      err.style.display = 'none';
+      return;
     }
-    btn.textContent = 'Join Now';
-    btn.setAttribute('aria-label','Join now');
-  });
-
-  // Validate on Join Now clicks
-  btn.addEventListener('click', (e) => {
-    if (btn.textContent !== 'Join Now') return; // only validate after expanded
+    // Second state: validate email
     const value = input.value.trim();
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     if (!valid) {
@@ -190,7 +196,15 @@ export default function init() {
       err.style.display = 'block';
     } else {
       err.style.display = 'none';
-      // Prototype: no submit; in production, fire request here
+      // Hook for future submit
+    }
+  });
+
+  input.addEventListener('input', () => {
+    if (err.style.display !== 'none') {
+      const value = input.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      if (valid) err.style.display = 'none';
     }
   });
 
