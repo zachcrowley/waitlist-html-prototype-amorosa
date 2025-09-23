@@ -4,10 +4,12 @@
   const topbarJoinBtn = document.getElementById('topbarJoinBtn');
   let isPosting = false;
   let prefetchTimer = null;
-  let cachedCount = 0;
+  const SESSION_KEY = 'waitlistCount';
+  /** @type {number|null} */
+  let sessionStart = null;
   try {
-    const saved = localStorage.getItem('waitlistCount');
-    if (saved) cachedCount = Math.max(0, parseInt(saved, 10) || 0);
+    const saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved != null) sessionStart = Math.max(0, parseInt(saved, 10) || 0);
   } catch (_) {}
 
   async function fetchCount() {
@@ -16,9 +18,9 @@
       if (!r.ok) throw new Error('Failed to fetch count');
       const data = await r.json();
       const newVal = Number(data.displayCount || 0);
-      cachedCount = newVal;
-      try { localStorage.setItem('waitlistCount', String(cachedCount)); } catch (_) {}
-      animateCountTo(newVal, 420);
+      try { sessionStorage.setItem(SESSION_KEY, String(newVal)); } catch (_) {}
+      if (prefetchTimer) { clearInterval(prefetchTimer); prefetchTimer = null; }
+      animateCountTo(newVal, 360);
     } catch (e) {
       console.error(e);
     }
@@ -115,21 +117,28 @@
   // Prefetch strategy: start from cachedCount and slowly tick while fetching
   function startPrefetchTick() {
     if (!topbarCountEl) return;
-    let temp = Math.max(0, cachedCount);
-    topbarCountEl.textContent = temp ? temp.toLocaleString() : '—';
+    let temp = 0;
+    topbarCountEl.textContent = '0';
     clearInterval(prefetchTimer);
     prefetchTimer = setInterval(() => {
-      temp += Math.random() < 0.6 ? 1 : 0; // gentle drift
+      // slightly faster than before while waiting
+      temp += Math.random() < 0.85 ? 1 : 2;
       topbarCountEl.textContent = temp.toLocaleString();
-    }, 700);
+    }, 380);
   }
 
   async function initTopbar() {
-    startPrefetchTick();
-    try {
+    if (sessionStart != null) {
+      // Show last session value, but do not start ticking until API lands
+      if (topbarCountEl) topbarCountEl.textContent = sessionStart.toLocaleString();
       await fetchCount();
-    } finally {
-      clearInterval(prefetchTimer);
+    } else {
+      startPrefetchTick();
+      try {
+        await fetchCount();
+      } finally {
+        if (prefetchTimer) { clearInterval(prefetchTimer); prefetchTimer = null; }
+      }
     }
   }
 
