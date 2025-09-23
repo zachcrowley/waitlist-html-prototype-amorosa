@@ -3,6 +3,12 @@
   const topbarCountEl = document.getElementById('topbarCount');
   const topbarJoinBtn = document.getElementById('topbarJoinBtn');
   let isPosting = false;
+  let prefetchTimer = null;
+  let cachedCount = 0;
+  try {
+    const saved = localStorage.getItem('waitlistCount');
+    if (saved) cachedCount = Math.max(0, parseInt(saved, 10) || 0);
+  } catch (_) {}
 
   async function fetchCount() {
     try {
@@ -10,20 +16,22 @@
       if (!r.ok) throw new Error('Failed to fetch count');
       const data = await r.json();
       const newVal = Number(data.displayCount || 0);
-      animateCountTo(newVal);
+      cachedCount = newVal;
+      try { localStorage.setItem('waitlistCount', String(cachedCount)); } catch (_) {}
+      animateCountTo(newVal, 420);
     } catch (e) {
       console.error(e);
     }
   }
 
-  function animateCountTo(target) {
+  function animateCountTo(target, durationOverride) {
     if (!topbarCountEl) return;
     const current = Number((topbarCountEl.textContent || '0').replace(/[^0-9]/g, '')) || 0;
     if (!isFinite(target)) {
       topbarCountEl.textContent = '—';
       return;
     }
-    const duration = 450;
+    const duration = typeof durationOverride === 'number' ? durationOverride : 650;
     const start = performance.now();
     const diff = target - current;
     function frame(now) {
@@ -67,9 +75,9 @@
 
   function oneShotConfetti() {
     try {
-      // tiny inline confetti without deps
-      const DURATION = 900;
-      const PARTICLES = 60;
+      // tuned inline confetti without deps
+      const DURATION = 1400;
+      const PARTICLES = 80;
       const container = document.createElement('div');
       container.style.position = 'fixed';
       container.style.left = '0';
@@ -83,29 +91,50 @@
       for (let i = 0; i < PARTICLES; i++) {
         const p = document.createElement('div');
         p.style.position = 'absolute';
-        p.style.top = '0px';
+        p.style.top = '-8px';
         p.style.left = Math.random()*100 + 'vw';
-        p.style.width = '8px';
-        p.style.height = '12px';
+        p.style.width = Math.random() < 0.5 ? '6px' : '8px';
+        p.style.height = Math.random() < 0.5 ? '10px' : '12px';
         p.style.background = colors[Math.floor(Math.random()*colors.length)];
         p.style.transform = `rotate(${Math.random()*360}deg)`;
         p.style.willChange = 'transform, opacity';
         container.appendChild(p);
-        const x = (Math.random() - 0.5) * 120;
-        const y = 80 + Math.random() * 120;
-        const rot = (Math.random() - 0.5) * 360;
-        const delay = Math.random() * 100;
+        const driftX = (Math.random() - 0.5) * 60; // less lateral drift
+        const fallY = 70 + Math.random() * 85; // reach further down viewport
+        const rot = (Math.random() - 0.5) * 270;
+        const delay = Math.random() * 120;
         p.animate([
           { transform: 'translate3d(0,0,0) rotate(0deg)', opacity: 1 },
-          { transform: `translate3d(${x}vw, ${y}vh, 0) rotate(${rot}deg)`, opacity: 0 }
-        ], { duration: DURATION + Math.random()*400, delay, easing: 'cubic-bezier(.2,.7,.2,1)' });
+          { transform: `translate3d(${driftX}vw, ${fallY}vh, 0) rotate(${rot}deg)`, opacity: 0 }
+        ], { duration: DURATION + Math.random()*600, delay, easing: 'cubic-bezier(.2,.8,.2,1)' });
       }
-      setTimeout(() => { container.remove(); }, DURATION + 500);
+      setTimeout(() => { container.remove(); }, DURATION + 800);
     } catch (_) {}
   }
 
+  // Prefetch strategy: start from cachedCount and slowly tick while fetching
+  function startPrefetchTick() {
+    if (!topbarCountEl) return;
+    let temp = Math.max(0, cachedCount);
+    topbarCountEl.textContent = temp ? temp.toLocaleString() : '—';
+    clearInterval(prefetchTimer);
+    prefetchTimer = setInterval(() => {
+      temp += Math.random() < 0.6 ? 1 : 0; // gentle drift
+      topbarCountEl.textContent = temp.toLocaleString();
+    }, 700);
+  }
+
+  async function initTopbar() {
+    startPrefetchTick();
+    try {
+      await fetchCount();
+    } finally {
+      clearInterval(prefetchTimer);
+    }
+  }
+
   // Initialize
-  window.addEventListener('load', fetchCount);
+  window.addEventListener('load', initTopbar);
   topbarJoinBtn?.addEventListener('click', onJoinClick);
   const scenarios = [
     '“When is the Abundance Face and Body Mask Coming Back in Stock!!! I\'ve Run Out!”',
