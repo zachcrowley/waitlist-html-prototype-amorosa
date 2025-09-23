@@ -7,6 +7,8 @@
   const SESSION_KEY = 'waitlistCount';
   /** @type {number|null} */
   let sessionStart = null;
+  let pollTimer = null;
+  let lastFetchTs = 0;
   try {
     const saved = sessionStorage.getItem(SESSION_KEY);
     if (saved != null) sessionStart = Math.max(0, parseInt(saved, 10) || 0);
@@ -21,6 +23,7 @@
       try { sessionStorage.setItem(SESSION_KEY, String(newVal)); } catch (_) {}
       if (prefetchTimer) { clearInterval(prefetchTimer); prefetchTimer = null; }
       animateCountTo(newVal, 360);
+      lastFetchTs = Date.now();
     } catch (e) {
       console.error(e);
     }
@@ -140,6 +143,20 @@
         if (prefetchTimer) { clearInterval(prefetchTimer); prefetchTimer = null; }
       }
     }
+    startPolling();
+  }
+
+  function startPolling() {
+    clearInterval(pollTimer);
+    pollTimer = setInterval(() => {
+      if (document.hidden) return;
+      fetchCount();
+    }, 60000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && Date.now() - lastFetchTs > 55000) {
+        fetchCount();
+      }
+    });
   }
 
   // Initialize
