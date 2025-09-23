@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div
+      id="topbar"
+      role="region"
+      aria-label="Waitlist announcement"
+      class="topbar"
+    >
+      <span class="topbar__badge" aria-live="polite" aria-atomic="true">
+        <strong id="topbarCount">—</strong>
+      </span>
+      <span class="topbar__text topbar__text--desktop">Skincare Lovers are already on the Restock Launch Waitlist – Don’t Miss Out! 🥳</span>
+      <span class="topbar__text topbar__text--mobile">Skincare Lovers on the Waitlist – Don’t Miss Out! 🥳</span>
+      <button id="topbarJoinBtn" class="topbar__btn" type="button">Join the Waitlist</button>
+    </div>
     <main class="page-frame">
       <section class="hero">
         <img src="./assets/hero-banner-waitlist.webp" alt="Hydrate Clear Restore - Amorosa" class="hero__image" onerror="this.onerror=null;this.src='./assets/hero-banner-waitlist.jpg'" />

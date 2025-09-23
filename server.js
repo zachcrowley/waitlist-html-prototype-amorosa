@@ -22,6 +22,47 @@ const server = http.createServer((req, res) => {
   const safeSuffix = urlPath.replace(/\..\/|\/~|\/\//g, '');
   let filePath = path.join(root, safeSuffix);
 
+  // Simple API endpoints for local/dev
+  if (urlPath === '/api/waitlist' && req.method === 'GET') {
+    fetch('https://join-waitlist-counter.vercel.app/api/waitlist', { method: 'GET' })
+      .then((r) => r.json())
+      .then((data) => {
+        const body = JSON.stringify({ displayCount: data.displayCount, serverTs: data.serverTs });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(body);
+      })
+      .catch(() => {
+        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: 'upstream error' }));
+      });
+    return;
+  }
+
+  if (urlPath === '/api/join-success' && req.method === 'POST') {
+    const adminToken = process.env.ADMIN_TOKEN;
+    if (!adminToken) {
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'ADMIN_TOKEN missing' }));
+      return;
+    }
+    const payload = JSON.stringify({ reason: 'join_waitlist_success' });
+    fetch('https://join-waitlist-counter.vercel.app/api/waitlist/manual-increment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': adminToken },
+      body: payload
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error('upstream failed');
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: true }));
+      })
+      .catch(() => {
+        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: false }));
+      });
+    return;
+  }
+
   if (urlPath === '/' || !path.extname(filePath)) {
     filePath = path.join(root, 'index.html');
   }
