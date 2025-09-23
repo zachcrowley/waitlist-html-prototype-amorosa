@@ -1,0 +1,69 @@
+.amorosa-topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background-image: linear-gradient(90deg, #BFD9F5, #E3F0FB);
+  color: #001F54;
+  line-height: 1.2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.amorosa-topbar[data-sticky="false"] { position: static; }
+.topbar__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 6px 12px;
+  border: 1px solid #A3C8F2;
+  background: #ffffff;
+}
+.topbar__badge strong { line-height: 1; display: inline-block; }
+.topbar__text { opacity: 0.9; }
+.topbar__text--desktop { display: none; }
+.topbar__text--mobile { display: inline; }
+.topbar__btn {
+  margin-left: 6px;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #001F54;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+}
+.topbar__btn:active { transform: scale(0.98); }
+.topbar__btn:focus-visible { outline: 2px solid #7fb5e6; outline-offset: 2px; }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .amorosa-topbar { font-size: 13px; padding: 8px 12px; line-height: 1.6; }
+  .topbar__text--desktop { display: none; }
+  .topbar__text--mobile { display: inline; }
+  .topbar__badge { padding: 8px 18px; font-size: 1.2rem; }
+  .amorosa-topbar[data-show-mobile-cta="false"] .topbar__btn { display: none; }
+}
+
+@media (min-width: 640px) {
+  .amorosa-topbar { font-size: 14px; }
+  .topbar__text--desktop { display: inline; }
+  .topbar__text--mobile { display: none; }
+}
+
+/* Count bump animation */
+.count-bump { animation: bump 250ms ease-out; }
+@keyframes bump { 0% { transform: translateY(0);} 30% { transform: translateY(-2px);} 60% { transform: translateY(0);} 100% { transform: translateY(0);} }
+
+

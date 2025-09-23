@@ -23,25 +23,45 @@ const server = http.createServer((req, res) => {
   let filePath = path.join(root, safeSuffix);
 
   // Simple API endpoints for local/dev
-  if (urlPath === '/api/waitlist' && req.method === 'GET') {
+  if (urlPath === '/api/waitlist' && (req.method === 'GET' || req.method === 'OPTIONS')) {
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': 'https://amorosaaus.com.au',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400'
+      });
+      res.end();
+      return;
+    }
     fetch('https://join-waitlist-counter.vercel.app/api/waitlist', { method: 'GET' })
       .then((r) => r.json())
       .then((data) => {
         const body = JSON.stringify({ displayCount: data.displayCount, serverTs: data.serverTs });
-        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': 'https://amorosaaus.com.au' });
         res.end(body);
       })
       .catch(() => {
-        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': 'https://amorosaaus.com.au' });
         res.end(JSON.stringify({ error: 'upstream error' }));
       });
     return;
   }
 
-  if (urlPath === '/api/join-success' && req.method === 'POST') {
+  if (urlPath === '/api/join-success' && (req.method === 'POST' || req.method === 'OPTIONS')) {
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': 'https://amorosaaus.com.au',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400'
+      });
+      res.end();
+      return;
+    }
     const adminToken = process.env.ADMIN_TOKEN;
     if (!adminToken) {
-      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': 'https://amorosaaus.com.au' });
       res.end(JSON.stringify({ error: 'ADMIN_TOKEN missing' }));
       return;
     }
@@ -53,11 +73,11 @@ const server = http.createServer((req, res) => {
     })
       .then((r) => {
         if (!r.ok) throw new Error('upstream failed');
-        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': 'https://amorosaaus.com.au' });
         res.end(JSON.stringify({ ok: true }));
       })
       .catch(() => {
-        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': 'https://amorosaaus.com.au' });
         res.end(JSON.stringify({ ok: false }));
       });
     return;

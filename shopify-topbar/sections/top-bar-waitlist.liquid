@@ -1,0 +1,55 @@
+{%- comment -%}
+  Amorosa Top Bar (Waitlist) — Shopify Section
+{%- endcomment -%}
+
+<div
+  class="amorosa-topbar"
+  id="amorosa-topbar-{{ section.id }}"
+  data-desktop-text="{{ section.settings.desktop_text | escape }}"
+  data-mobile-text="{{ section.settings.mobile_text | escape }}"
+  data-show-mobile-cta="{{ section.settings.show_mobile_cta }}"
+  data-sticky="{{ section.settings.sticky }}"
+  data-confetti="{{ section.settings.confetti }}"
+  data-api-base="{{ section.settings.api_base | escape }}"
+  data-poll-interval="{{ section.settings.poll_interval }}"
+  role="region"
+  aria-label="{{ section.settings.aria_label | escape }}"
+>
+  <span class="topbar__badge">
+    <strong id="topbarCount-{{ section.id }}">—</strong>
+  </span>
+
+  <span class="topbar__text topbar__text--desktop"></span>
+  <span class="topbar__text topbar__text--mobile"></span>
+
+  <button
+    id="topbarJoinBtn-{{ section.id }}"
+    class="topbar__btn"
+    type="button"
+  >{{ section.settings.cta_label }}</button>
+</div>
+
+{{ 'top-bar-waitlist.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'top-bar-waitlist.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Amorosa Top Bar (Waitlist)",
+  "settings": [
+    { "type": "text", "id": "desktop_text", "label": "Desktop message", "default": "Skincare Lovers are already on the Restock Launch Waitlist – Don’t Miss Out! 🥳" },
+    { "type": "text", "id": "mobile_text", "label": "Mobile message", "default": "Skincare Lovers on the Waitlist – Don’t Miss Out! 🥳" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Join the Waitlist" },
+    { "type": "checkbox", "id": "show_mobile_cta", "label": "Show CTA on mobile", "default": false },
+    { "type": "checkbox", "id": "sticky", "label": "Stick to top on scroll", "default": true },
+    { "type": "checkbox", "id": "confetti", "label": "Confetti on join (desktop)", "default": true },
+    { "type": "number", "id": "poll_interval", "label": "Polling interval (seconds)", "default": 60, "min": 10, "max": 600 },
+    { "type": "text", "id": "api_base", "label": "API Base URL", "default": "" },
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Waitlist announcement" }
+  ],
+  "presets": [
+    { "name": "Amorosa Top Bar (Waitlist)" }
+  ]
+}
+{% endschema %}
+
+
