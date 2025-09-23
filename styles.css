@@ -187,9 +187,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .topbar { font-size: 13px; padding: 8px 12px; }
+  .topbar { font-size: 13px; padding: 8px 12px; line-height: 1.6; }
   .topbar__text--desktop { display: none; }
   .topbar__text--mobile { display: inline; }
+  .topbar__badge { padding: 8px 18px; font-size: 1.2rem; }
   .topbar__btn { display: none; }
   .page-frame { margin: 12px; border-radius: 22px; }
   .hero__image { border-top-left-radius: 22px; border-top-right-radius: 22px; }

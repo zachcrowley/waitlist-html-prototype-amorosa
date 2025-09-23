@@ -78,7 +78,7 @@
   function oneShotConfetti() {
     try {
       // tuned inline confetti without deps
-      const DURATION = 1400;
+      const DURATION = 1700; // slower overall
       const PARTICLES = 80;
       const container = document.createElement('div');
       container.style.position = 'fixed';
@@ -104,13 +104,13 @@
         const driftX = (Math.random() - 0.5) * 60; // less lateral drift
         const fallY = 70 + Math.random() * 85; // reach further down viewport
         const rot = (Math.random() - 0.5) * 270;
-        const delay = Math.random() * 120;
+        const delay = Math.random() * 200; // stagger more
         p.animate([
           { transform: 'translate3d(0,0,0) rotate(0deg)', opacity: 1 },
           { transform: `translate3d(${driftX}vw, ${fallY}vh, 0) rotate(${rot}deg)`, opacity: 0 }
-        ], { duration: DURATION + Math.random()*600, delay, easing: 'cubic-bezier(.2,.8,.2,1)' });
+        ], { duration: DURATION + Math.random()*800, delay, easing: 'cubic-bezier(.2,.8,.2,1)' });
       }
-      setTimeout(() => { container.remove(); }, DURATION + 800);
+      setTimeout(() => { container.remove(); }, DURATION + 1000);
     } catch (_) {}
   }
 
