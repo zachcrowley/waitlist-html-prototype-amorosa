@@ -5,10 +5,6 @@
       "runtime": "nodejs20.x"
     }
   },
-  "routes": [
-    { "src": "/api/waitlist", "dest": "/api/waitlist.js" },
-    { "src": "/api/join-success", "dest": "/api/join-success.js" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
