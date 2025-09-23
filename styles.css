@@ -36,6 +36,9 @@ body {
   background-image: linear-gradient(90deg, #BFD9F5, #E3F0FB);
   color: #001F54;
   line-height: 1.2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 .topbar__badge {
   display: inline-flex;
